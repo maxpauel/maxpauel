@@ -159,11 +159,15 @@ gzip ${res_file%.osc*}.sorted.CTSS.txt
 #	- R, R packages (rlist,stringr)
 #	- PromoterPipeline_20150516 (level1.py, depends on pysam), source - http://genome.gsc.riken.jp/plessy-20150516/PromoterPipeline_20150516.tar.gz
 # Input files:
+#	- ./osc/*.CTSS.gz - coverage files
+#	- ./DPI/outPooled/tc.spi_merged.ctssMaxCounts11_ctssMaxTpm1.bed.gz - robust CAGE TSS clusters
 #	- ./bam/*.ex.bam - filtered bam, reads of interest
 # Output files:
-#	- ./osc/*.osc - coverage files
-#	- ./osc/*.CTSS.gz - coverage files dor DPI input
-#	- ./DPI/ - DPI output, including robust CAGE TSS clusters (./DPI/outPooled/tc.spi_merged.ctssMaxCounts11_ctssMaxTpm1.bed.gz)
+#	- ./osc/*.counts - tables of read counts by cluster for each sample
+#	- ./Expression/total_tags.txt - library size by sample table
+#	- ./Expression/counts.txt - summary table of read counts by sample for each cluster
+#	- ./Expression/tpm.txt - summary table of normalized read counts (TPM - tags per million) by sample for each cluster
+
 
 mkdir ./Expression
 gzip -d ./osc/*.gz
@@ -215,4 +219,3 @@ write.table(leven,'./Expression/counts.txt',quote=F,sep='\t',col.names=T,row.nam
 write.table(tpm,'./Expression/tpm.txt',quote=F,sep='\t',col.names=T,row.names=T)
 q()
 n
-
